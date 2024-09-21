@@ -5,10 +5,14 @@ from sklearn.preprocessing import MinMaxScaler
 import keras
 from keras.models import Sequential
 from keras.layers import Dense, LSTM
+from datetime import datetime
 
 def get_data(asset):
     name = asset + '-USD'
-    df = yf.download(name, start='2022-01-01', end='2024-09-06')
+    date_current = datetime.now()
+    date_current = date_current.strftime('%Y-%m-%d')
+
+    df = yf.download(name, start='2022-01-01', end=date_current)
     print(df)
     return df
 
@@ -59,6 +63,7 @@ def model(df, asset):
 
     print(prediccion)
     modelo.save(f'Models/{asset}.h5')
+    modelo.save(f'Backend/Models/{asset}.h5')
 
 
 if __name__ == '__main__':
