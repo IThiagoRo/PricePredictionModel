@@ -12,7 +12,7 @@ def get_data(asset):
     print(df)
     return df
 
-def model(df):
+def model(df, asset):
     set_entrenamiento = df[:'2024-04-01'].iloc[:,1:2]
     set_validacion = df['2024-04-01':].iloc[:,1:2]
     
@@ -58,9 +58,10 @@ def model(df):
     prediccion = sc.inverse_transform(prediccion)
 
     print(prediccion)
+    modelo.save(f'Models/{asset}.h5')
 
 
 if __name__ == '__main__':
     asset = input("Ingrese el nombre de la accion:")
     df = get_data(asset.upper())
-    model(df)
+    model(df, asset)
