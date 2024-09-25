@@ -3,15 +3,23 @@ from tensorflow.keras.models import load_model
 
 from fastapi import FastAPI
 from pydantic import BaseModel
+from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 
 import numpy as np
 import yfinance as yf
 from sklearn.preprocessing import MinMaxScaler
 from datetime import datetime, timedelta
+import json as js
 
 app = FastAPI()
-
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=['*'],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 MODEL = load_model('Models/btc.h5', custom_objects={'mse': 'mean_squared_error'})
 
 sc = MinMaxScaler(feature_range=(0, 1))
@@ -47,7 +55,7 @@ def get_price_data(asset):
 async def index():
     return {"message": "API para predecir precios de BTC"}
 
-@app.post('/predict/')
+@app.get('/predict/')
 async def predict(asset: str):
     # Descargar los últimos 60 días de precios
     last_60_days = get_last_60_days(asset)
@@ -64,7 +72,7 @@ async def predict(asset: str):
 
     predicted_price = sc.inverse_transform(prediction)
 
-    return {"predicted_price": float(predicted_price[0][0])}
+    return js.dumps({"predicted_price": float(predicted_price[0][0])})
 
 @app.get('/btc_prices/')
 async def btc_prices(asset: str):
@@ -72,10 +80,21 @@ async def btc_prices(asset: str):
     price_data = get_price_data(asset)
     
     prices = price_data.to_dict(orient='records')
-    
-    return {"btc_prices": prices}
+    for entry in prices:
+        entry['Date'] = entry['Date'].strftime('%Y-%m-%d %H:%M:%S')
+    response = js.dumps({"btc_prices": prices})
+    print(response)
+    return response
 
-
+@app.get('/btc_last_price/')
+async def btc_prices(asset: str):
+    price_data = get_price_data(asset)
+    prices = price_data.to_dict(orient='records')
+    for entry in prices:
+        entry['Date'] = entry['Date'].strftime('%Y-%m-%d %H:%M:%S')
+    last_adj_close = prices[-1]['Adj Close'] if prices else None
+    response = js.dumps({"last_adj_close": last_adj_close})
+    return response
 if __name__ == '__main__':
     uvicorn.run(app, host='0.0.0.0', port=8000)
 
