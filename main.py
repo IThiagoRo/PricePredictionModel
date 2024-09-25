@@ -64,6 +64,17 @@ def model(df, asset):
     print(prediccion)
     modelo.save(f'Models/{asset}.h5')
     modelo.save(f'Backend/Models/{asset}.h5')
+    
+     # Predicción para el día de mañana
+    ultimo_bloque = set_validacion.values[-time_step:]
+    ultimo_bloque = sc.transform(ultimo_bloque)  # Escalar
+    ultimo_bloque = np.reshape(ultimo_bloque, (1, time_step, 1))
+
+    # Predecir el próximo valor
+    prediccion_manana = modelo.predict(ultimo_bloque)
+    prediccion_manana = sc.inverse_transform(prediccion_manana)
+
+    print(f"Predicción para mañana: {prediccion_manana[0][0]}")
 
 
 if __name__ == '__main__':
