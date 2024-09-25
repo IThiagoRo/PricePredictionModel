@@ -2,6 +2,7 @@ import tensorflow as tf
 from tensorflow.keras.models import load_model
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
