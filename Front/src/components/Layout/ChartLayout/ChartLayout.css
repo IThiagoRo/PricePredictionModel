@@ -1,0 +1,126 @@
+* {
+    box-sizing: border-box;
+}
+
+.container {
+    display: flex;
+    padding: 5px;
+    gap: 10px;
+    flex-flow: column;
+}
+
+@media(min-width: 1400px) {
+    .container {
+        flex-flow: row;
+    }
+}
+
+.grid-1 {
+    flex: 2;
+    display: grid;
+    grid-template-columns: repeat(3, 2fr);
+    grid-gap: 20px;
+    grid-auto-rows: minmax(150px, auto);
+    padding: 10px;
+}
+
+.grid-item {
+    /* background-color: rgb(136, 167, 167); */
+}
+
+.grid-item-4 {
+    grid-column: 1/4;
+}
+
+.grid-item-5 {
+    grid-column: 1/4;
+    display: flex;
+    padding: 0;
+    gap: 10px
+}
+
+.grid-item-5-1 {
+    /* background-color: rgb(6, 255, 255); */
+    height: 100%;
+    flex: 1;
+}
+
+.grid-item-5-2 {
+    /* background-color: rgb(171, 231, 231); */
+    flex: 1;
+}
+
+.grid-2 {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px;
+    flex-flow: column;
+}
+
+@media(max-width: 1400px) {
+    .grid-2 {
+        display: flex;
+        flex-flow: row;
+        justify-content: center;
+    }
+}
+
+.grid-item-2-1, .grid-item-2-2 {
+    /* min-height: 49%; */
+    width: 100%;
+}
+
+@media(max-width: 800px) {
+    .grid-1 {
+        width: 100%;
+        display: flex;
+        flex-flow: column;
+    }
+    .grid-2 {
+        flex-flow: column;
+    }
+    .grid-item-5 {
+        flex-flow: column;
+    }
+}
+
+.cyan-box {
+    border: 2px solid cyan;
+    box-shadow: 0px 4px 6px rgba(0, 255, 255, 0.5);
+    transition: all 0.3s ease;
+  }
+  
+  .red-box {
+    border: 2px solid rgba(255, 69, 0, 0.9); /* Rojo-naranja */
+    box-shadow: 0px 4px 6px rgba(255, 69, 0, 0.5);
+    transition: all 0.3s ease;
+  }
+  
+  .illuminated {
+    background-color: rgba(255, 255, 255, 0.1);
+    animation: glow 1.5s infinite alternate;
+  }
+  
+  @keyframes glow {
+    from {
+      box-shadow: 0 0 10px cyan;
+    }
+    to {
+      box-shadow: 0 0 20px cyan;
+    }
+  }
+  
+  .red-glow {
+    animation: redGlow 1.5s infinite alternate;
+  }
+  
+  @keyframes redGlow {
+    from {
+      box-shadow: 0 0 10px rgba(255, 69, 0, 0.9);
+    }
+    to {
+      box-shadow: 0 0 20px rgba(255, 69, 0, 0.9);
+    }
+  }
