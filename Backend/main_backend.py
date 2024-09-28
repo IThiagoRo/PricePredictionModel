@@ -82,7 +82,7 @@ async def btc_prices(asset: str):
     
     prices = price_data.to_dict(orient='records')
     for entry in prices:
-        entry['Date'] = entry['Date'].strftime('%Y-%m-%d %H:%M:%S')
+        entry['Date'] = entry['Date'].strftime('%Y-%m-%d')
     response = js.dumps({"btc_prices": prices})
     print(response)
     return response
@@ -98,4 +98,3 @@ async def btc_prices(asset: str):
     return response
 if __name__ == '__main__':
     uvicorn.run(app, host='0.0.0.0', port=8000)
-
