@@ -36,7 +36,7 @@ const App = () => {
   const fetchTomorrowPrice = async () => {
     //const response = await fetch('http://localhost:8000/predict?asset=BTC')
     //const response = await fetch('http://backpriceprediction-production.up.railway.app/predict?asset=BTC')
-    const response = await fetch('http://backpriceprediction-production.up.railway.app/predict?asset=BTC')
+    const response = await fetch('https://web-production-aa7a.up.railway.app/predict/?asset=BTC')
 	
     const data = await response.json()
 
