@@ -17,7 +17,8 @@ const App = () => {
   // Función para obtener datos históricos de BTC desde el backend
   const fetchBtcData = async () => {
     //const response = await fetch('http://localhost:8000/btc_prices?asset=BTC')
-    const response = await fetch('http://backpriceprediction-production.up.railway.app/btc_prices?asset=BTC')
+    //const response = await fetch('http://backpriceprediction-production.up.railway.app/btc_prices?asset=BTC')
+    const response = await fetch('https://web-production-aa7a.up.railway.app/btc_prices?asset=BTC')
     const data = await response.json()
 
     // Parsear los datos de precios de BTC
@@ -34,7 +35,9 @@ const App = () => {
   // Función para obtener el precio estimado de "mañana" desde el backend
   const fetchTomorrowPrice = async () => {
     //const response = await fetch('http://localhost:8000/predict?asset=BTC')
+    //const response = await fetch('http://backpriceprediction-production.up.railway.app/predict?asset=BTC')
     const response = await fetch('http://backpriceprediction-production.up.railway.app/predict?asset=BTC')
+	
     const data = await response.json()
 
     const predictedPrice = JSON.parse(data).predicted_price
